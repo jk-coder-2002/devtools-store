@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { BillingPortalButton } from '@/components/billing-portal-button';
 import { listCustomers } from '@/services/customerService';
 import { listPurchases } from '@/services/purchaseService';
@@ -94,15 +96,23 @@ export default async function AdminPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                {purchases.map((purchase) => (
-                  <tr key={purchase._id}>
-                    <td className="px-4 py-4 text-slate-700">{(purchase.customerId as any)?.email ?? 'Unknown'}</td>
-                    <td className="px-4 py-4 text-slate-700">{purchase.productName}</td>
-                    <td className="px-4 py-4 text-slate-700">{(purchase.amount / 100).toFixed(2)} {purchase.currency.toUpperCase()}</td>
-                    <td className="px-4 py-4 text-slate-700">{purchase.status}</td>
-                    <td className="px-4 py-4 text-slate-700">{formatDate(purchase.createdAt)}</td>
+                {purchases.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="px-4 py-6 text-center text-slate-500">
+                      No purchase history found.
+                    </td>
                   </tr>
-                ))}
+                ) : (
+                  purchases.map((purchase) => (
+                    <tr key={purchase._id}>
+                      <td className="px-4 py-4 text-slate-700">{(purchase.customerId as any)?.email ?? 'Unknown'}</td>
+                      <td className="px-4 py-4 text-slate-700">{purchase.productName}</td>
+                      <td className="px-4 py-4 text-slate-700">{(purchase.amount / 100).toFixed(2)} {purchase.currency.toUpperCase()}</td>
+                      <td className="px-4 py-4 text-slate-700">{purchase.status}</td>
+                      <td className="px-4 py-4 text-slate-700">{formatDate(purchase.createdAt)}</td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -127,15 +137,23 @@ export default async function AdminPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                {subscriptions.map((subscription) => (
-                  <tr key={subscription._id}>
-                    <td className="px-4 py-4 text-slate-700">{(subscription.customerId as any)?.email ?? 'Unknown'}</td>
-                    <td className="px-4 py-4 text-slate-700">{subscription.planName}</td>
-                    <td className="px-4 py-4 text-slate-700">{subscription.status}</td>
-                    <td className="px-4 py-4 text-slate-700">{formatDate(subscription.currentPeriodEnd)}</td>
-                    <td className="px-4 py-4 text-slate-700">{formatDate(subscription.createdAt)}</td>
+                {subscriptions.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="px-4 py-6 text-center text-slate-500">
+                      No subscription history found.
+                    </td>
                   </tr>
-                ))}
+                ) : (
+                  subscriptions.map((subscription) => (
+                    <tr key={subscription._id}>
+                      <td className="px-4 py-4 text-slate-700">{(subscription.customerId as any)?.email ?? 'Unknown'}</td>
+                      <td className="px-4 py-4 text-slate-700">{subscription.planName}</td>
+                      <td className="px-4 py-4 text-slate-700">{subscription.status}</td>
+                      <td className="px-4 py-4 text-slate-700">{formatDate(subscription.currentPeriodEnd)}</td>
+                      <td className="px-4 py-4 text-slate-700">{formatDate(subscription.createdAt)}</td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
