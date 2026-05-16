@@ -2,9 +2,7 @@ import Link from 'next/link';
 import { ReconcileSession } from '@/components/reconcile-session';
 
 type Props = {
-  searchParams?: {
-    session_id?: string;
-  };
+  searchParams?: Promise<{ session_id?: string } | undefined>;
 };
 
 export default async function SuccessPage({ searchParams }: Props) {
